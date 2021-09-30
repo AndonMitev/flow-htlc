@@ -1,0 +1,21 @@
+{
+  "name": "flow-playground",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "start": "nodemon index.js"
+  },
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "@onflow/fcl": "0.0.77",
+    "@onflow/sdk": "0.0.54",
+    "@onflow/types": "0.0.5",
+    "@onflow/util-encode-key": "0.0.2",
+    "elliptic": "^6.5.4",
+    "express": "^4.17.1",
+    "nodemon": "^2.0.13",
+    "sha3": "^2.1.4"
+  }
+}
