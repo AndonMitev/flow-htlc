@@ -41,7 +41,7 @@ access(all) contract HTLCs {
                 .concat(buyerAddress)
 
             
-            self.id = HashAlgorithm.SHA3_256.hash(concatedParams)
+            self.id = String.encodeHex(HashAlgorithm.SHA3_256.hash(concatedParams))
             self.secretHash = secretHash
             self.expiry = expiry
             self.buyer = buyer
