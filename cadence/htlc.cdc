@@ -24,17 +24,16 @@ access(all) contract HTLCs {
             buyer: Capability<&{FungibleToken.Receiver}>,
             seller: Capability<&{FungibleToken.Receiver}>,
         ) {
-            var expiryAsStr = expiry.toString()
-            var buyerAddress = buyer.address.toString()
-            var sellerAddress = seller.address.toString()
-            var secretHashAsStr = String.encodeHex(secretHash)
+            let expiryAsStr = expiry.toString()
+            let buyerAddressAsStr = buyer.address.toString()
+            let sellerAddressAsStr = seller.address.toString()
+            let secretHashAsStr = String.encodeHex(secretHash)
 
-            var concatedParams = expiryAsStr
+            let concatedParams = expiryAsStr
                 .concat(secretHashAsStr)
-                .concat(sellerAddress)
-                .concat(buyerAddress)
+                .concat(sellerAddressAsStr)
+                .concat(buyerAddressAsStr)
 
-            
             self.id = String.encodeHex(HashAlgorithm.SHA3_256.hash(concatedParams.utf8))
             self.secretHash = secretHash
             self.expiry = expiry
@@ -203,14 +202,14 @@ access(all) contract HTLCs {
             seller: Capability<&{FungibleToken.Receiver}>
         ): String {
             let expiryAsStr = expiry.toString()
-            let buyerAddress = buyer.address.toString()
-            let sellerAddress = seller.address.toString()
+            let buyerAddressAsStr = buyer.address.toString()
+            let sellerAddressAsStr = seller.address.toString()
             let secretHashAsStr = String.encodeHex(secretHash);
            
             let concatedParams = expiryAsStr
                 .concat(secretHashAsStr)
-                .concat(sellerAddress)
-                .concat(buyerAddress)
+                .concat(sellerAddressAsStr)
+                .concat(buyerAddressAsStr)
 
             return String.encodeHex(HashAlgorithm.SHA3_256.hash(concatedParams.utf8))
         }
