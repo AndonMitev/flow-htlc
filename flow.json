@@ -6,7 +6,7 @@
 		}
 	},
 	"contracts": {
-		"HTLCs": "./htlc.cdc"
+		"HTLCs": "./cadence/htlc.cdc"
 	},
 	"networks": {
 		"emulator": "127.0.0.1:3569",
@@ -15,8 +15,8 @@
 	},
 	"accounts": {
 		"my-testnet-account": {
-			"address": "0x1d94651ec082c228",
-			"key": "bb13a53f7e63eb583cf082118546947c3d3aa29241a5ee7ae48ab0f1558eae60"
+			"address": "0x2780bca911010040",
+			"key": "010c0209e680b0d579b726b4104517c2504f2e0dbe69afbac187fe520bb874c9"
 		},
 		"emulator-account": {
 			"address": "f8d6e0586b0a20c7",

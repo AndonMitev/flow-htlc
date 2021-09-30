@@ -1,4 +1,4 @@
-import FungibleToken from 0xee82856bf20e2aa6
+import FungibleToken from 0x9a0766d93b6608b7
 
 access(all) contract HTLCs {
     // Note that these are not denormalised. More addresses, and repeating the hash in Claimed might help
@@ -41,7 +41,7 @@ access(all) contract HTLCs {
                 .concat(buyerAddress)
 
             
-            self.id = String.encodeHex(HashAlgorithm.SHA3_256.hash(concatedParams))
+            self.id = String.encodeHex(HashAlgorithm.SHA3_256.hash(concatedParams.utf8))
             self.secretHash = secretHash
             self.expiry = expiry
             self.buyer = buyer
@@ -218,7 +218,7 @@ access(all) contract HTLCs {
                 .concat(sellerAddress)
                 .concat(buyerAddress)
 
-            return String.encodeHex(HashAlgorithm.SHA3_256.hash(concatedParams))
+            return String.encodeHex(HashAlgorithm.SHA3_256.hash(concatedParams.utf8))
         }
 
         // This will destroy any unclaimed HTLC Vaults!
