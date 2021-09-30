@@ -27,14 +27,8 @@ access(all) contract HTLCs {
             var expiryAsStr = expiry.toString()
             var buyerAddress = buyer.address.toString()
             var sellerAddress = seller.address.toString()
-            var secretHashAsStr = String();
+            var secretHashAsStr = String.encodeHex(secretHash)
 
-            var i = 0
-            while i < secretHash.length {
-                secretHashAsStr = secretHash[i].toString()
-                i = i + 1
-            }
-            
             var concatedParams = expiryAsStr
                 .concat(secretHashAsStr)
                 .concat(sellerAddress)
