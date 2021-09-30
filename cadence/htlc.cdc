@@ -2,8 +2,8 @@ import FungibleToken from 0x9a0766d93b6608b7
 
 access(all) contract HTLCs {
     // Note that these are not denormalised. More addresses, and repeating the hash in Claimed might help
-    pub event HTLCCreated(id: String, secretHash: [UInt8], expiry: UFix64, buyer: Address, seller:Address)
-    pub event HTLCClaimed(id: String, secret: [UInt8])
+    pub event HTLCCreated(id: String, secretHash: String, expiry: UFix64, buyer: Address, seller:Address)
+    pub event HTLCClaimed(id: String, secret: String)
     pub event HTLCRefunded(id: String)
 
     pub let HtlcManagerStoragePath: StoragePath
@@ -14,12 +14,12 @@ access(all) contract HTLCs {
     pub struct HTLCDetails {
         pub let id: String
         pub let expiry: UFix64
-        pub let secretHash: [UInt8]
+        pub let secretHash: String
         access(contract) let buyer: Capability<&{FungibleToken.Receiver}>
         access(contract) let seller: Capability<&{FungibleToken.Receiver}>
 
         init (
-            secretHash: [UInt8],
+            secretHash: String,
             expiry: UFix64,
             buyer: Capability<&{FungibleToken.Receiver}>,
             seller: Capability<&{FungibleToken.Receiver}>,
@@ -27,10 +27,10 @@ access(all) contract HTLCs {
             let expiryAsStr = expiry.toString()
             let buyerAddressAsStr = buyer.address.toString()
             let sellerAddressAsStr = seller.address.toString()
-            let secretHashAsStr = String.encodeHex(secretHash)
+            
 
             let concatedParams = expiryAsStr
-                .concat(secretHashAsStr)
+                .concat(secretHash)
                 .concat(sellerAddressAsStr)
                 .concat(buyerAddressAsStr)
 
@@ -54,18 +54,16 @@ access(all) contract HTLCs {
             return self.details
         }
 
-        pub fun claim(secret: [UInt8]) {
+        pub fun claim(secret: String) {
             pre {
                 getCurrentBlock().timestamp <= self.details.expiry: "cannot claim after expiry"
                 //FIXME: this is an implicit state test.
                 self.vault.balance > 0.0: "vault is empty"
             }
-            let hash: [UInt8] = HashAlgorithm.SHA3_256.hash(secret)
-            var i = 0
-            while i < self.details.secretHash.length {
-                assert(hash[i] == self.details.secretHash[i], message: "must provide correct secret to claim")
-                i = i + 1
-            }
+            let hash: String = String.encodeHex(HashAlgorithm.SHA3_256.hash(secret.utf8))
+            
+            assert(hash == self.details.secretHash, message: "must provide correct secret to claim")
+
             self.details.buyer.borrow()!.deposit(from: <- self.vault.withdraw(amount: self.vault.balance))
         }
 
@@ -83,14 +81,14 @@ access(all) contract HTLCs {
         }
 
         init (
-            secretHash: [UInt8],
+            secretHash: String,
             expiry: UFix64,
             buyer: Capability<&{FungibleToken.Receiver}>,
             seller: Capability<&{FungibleToken.Receiver}>,
             vault: @FungibleToken.Vault
         ) {
             pre {
-                secretHash.length == 32: "secret hash must be 32 bytes in length"
+                secretHash.length == 64: "secret hash must be 32 bytes in length"
                 expiry > getCurrentBlock().timestamp: "expiry must be in the future"
                 vault.balance > 0.0: "vault balance must be non-zero value"
                 // buyer.borrow().getType() == vault.getType(): "vault must be same type as buyer/seller vaults"
@@ -110,8 +108,8 @@ access(all) contract HTLCs {
 
     pub resource interface HTLCManagerPublic {
         pub fun claim(
-            secret: [UInt8],
-            secretHash: [UInt8],
+            secret: String,
+            secretHash: String,
             expiry: UFix64,
             buyer: Capability<&{FungibleToken.Receiver}>,
             seller: Capability<&{FungibleToken.Receiver}>
@@ -126,7 +124,7 @@ access(all) contract HTLCs {
         access(self) let htlcs: @{String: HTLC}
 
          pub fun createHTLC(
-            secretHash: [UInt8],
+            secretHash: String,
             expiry: UFix64,
             buyer: Capability<&{FungibleToken.Receiver}>,
             seller: Capability<&{FungibleToken.Receiver}>,
@@ -146,13 +144,13 @@ access(all) contract HTLCs {
                 secretHash: details.secretHash,
                 expiry: details.expiry,
                 buyer: details.buyer.address,
-                seller: details.seller.address
+                seller: details.seller.address,
             )
         }
 
         pub fun claim(
-            secret: [UInt8],
-            secretHash: [UInt8],
+            secret: String,
+            secretHash: String,
             expiry: UFix64,
             buyer: Capability<&{FungibleToken.Receiver}>,
             seller: Capability<&{FungibleToken.Receiver}>
@@ -173,7 +171,7 @@ access(all) contract HTLCs {
 
         // This isn't in the public interface.
         pub fun refund(
-            secretHash: [UInt8],
+            secretHash: String,
             expiry: UFix64,
             buyer: Capability<&{FungibleToken.Receiver}>,
             seller: Capability<&{FungibleToken.Receiver}>
@@ -196,7 +194,7 @@ access(all) contract HTLCs {
         // Note that buyer and seller are /public/ capabilities so this doesn't require multiple signers.
        
         access(contract) fun generateHTLCID (
-            secretHash: [UInt8],
+            secretHash: String,
             expiry: UFix64,
             buyer: Capability<&{FungibleToken.Receiver}>,
             seller: Capability<&{FungibleToken.Receiver}>
@@ -204,10 +202,9 @@ access(all) contract HTLCs {
             let expiryAsStr = expiry.toString()
             let buyerAddressAsStr = buyer.address.toString()
             let sellerAddressAsStr = seller.address.toString()
-            let secretHashAsStr = String.encodeHex(secretHash);
-           
+            
             let concatedParams = expiryAsStr
-                .concat(secretHashAsStr)
+                .concat(secretHash)
                 .concat(sellerAddressAsStr)
                 .concat(buyerAddressAsStr)
 
