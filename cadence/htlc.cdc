@@ -28,7 +28,6 @@ access(all) contract HTLCs {
             let buyerAddressAsStr = buyer.address.toString()
             let sellerAddressAsStr = seller.address.toString()
             
-
             let concatedParams = expiryAsStr
                 .concat(secretHash)
                 .concat(sellerAddressAsStr)

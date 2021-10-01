@@ -4,7 +4,7 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "start": "nodemon index.js"
+    "start": "nodemon ./server/index.js"
   },
   "author": "",
   "license": "ISC",
@@ -13,8 +13,10 @@
     "@onflow/sdk": "0.0.54",
     "@onflow/types": "0.0.5",
     "@onflow/util-encode-key": "0.0.2",
+    "crypto-js": "^4.1.1",
     "elliptic": "^6.5.4",
     "express": "^4.17.1",
+    "js-sha3": "^0.8.0",
     "nodemon": "^2.0.13",
     "sha3": "^2.1.4"
   }

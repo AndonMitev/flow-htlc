@@ -2,8 +2,16 @@ const fcl = require('@onflow/fcl')
 const { ec } = require('elliptic')
 const { SHA3 } = require('sha3')
 
-const ADDRESS = '0x1d94651ec082c228';
-const PRIVATE_KEY = 'bb13a53f7e63eb583cf082118546947c3d3aa29241a5ee7ae48ab0f1558eae60'
+// Seller
+// const ADDRESS = '0x21ba6f10bdf2acd0';
+// const PRIVATE_KEY = '1a0199a35e165fecf3295568dc664c8b74b2d5dc24f542c3784604679678f3a9'
+
+
+// Buyer
+const ADDRESS = '0x368b4c701d609c17'
+const PRIVATE_KEY = '26bff3a1b3f4671bcedd5757cfd38ab4a4629899bef746851b4e7bdfdb11e309'
+
+
 const KEY_ID = 0;
 
 const sign = msg => {
