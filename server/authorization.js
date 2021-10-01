@@ -3,13 +3,13 @@ const { ec } = require('elliptic')
 const { SHA3 } = require('sha3')
 
 // Seller
-// const ADDRESS = '0x21ba6f10bdf2acd0';
-// const PRIVATE_KEY = '1a0199a35e165fecf3295568dc664c8b74b2d5dc24f542c3784604679678f3a9'
+const ADDRESS = '0xdadbaee81662a80a';
+const PRIVATE_KEY = '8ed98931aecff9544afba0b4bbf64b12717f33f8d2450f25b22b2839df96f5a2'
 
 
 // Buyer
-const ADDRESS = '0x368b4c701d609c17'
-const PRIVATE_KEY = '26bff3a1b3f4671bcedd5757cfd38ab4a4629899bef746851b4e7bdfdb11e309'
+// const ADDRESS = '0x368b4c701d609c17'
+// const PRIVATE_KEY = '26bff3a1b3f4671bcedd5757cfd38ab4a4629899bef746851b4e7bdfdb11e309'
 
 
 const KEY_ID = 0;

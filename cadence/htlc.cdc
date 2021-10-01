@@ -165,7 +165,7 @@ access(all) contract HTLCs {
             let details = htlc.getDetails()
             htlc.claim(secret: secret)
             destroy htlc
-            emit HTLCClaimed( id: details.id, secret: secret)
+            emit HTLCClaimed(id: details.id, secret: secret)
         }
 
         // This isn't in the public interface.

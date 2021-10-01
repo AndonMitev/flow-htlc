@@ -1,8 +1,6 @@
-// const { findInitTransaction } = require('./swap-find-provider');
+const { _createManager, _createHTLC, _claimHTLC, _refundHTLC } = require('./swap-provider');
+// require('./swap-find-provider')
 
-// findInitTransaction()
-
-const { _createHTLC, _claimHTLC } = require('./swap-provider');
-
+// _createManager()
 // _createHTLC()
 _claimHTLC()

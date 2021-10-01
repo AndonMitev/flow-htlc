@@ -13,6 +13,7 @@
     "@onflow/sdk": "0.0.54",
     "@onflow/types": "0.0.5",
     "@onflow/util-encode-key": "0.0.2",
+    "bignumber.js": "^9.0.1",
     "crypto-js": "^4.1.1",
     "elliptic": "^6.5.4",
     "express": "^4.17.1",
