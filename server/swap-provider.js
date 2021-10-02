@@ -17,7 +17,7 @@ const { authorizationFunction } = require('./authorization');
 const SELLER_ADDRESS = '0xdadbaee81662a80a';
 const BUYER_ADDRESS = '0x368b4c701d609c17'
 
-const expiry = Math.floor(Date.now() / 1000) + 600
+const expiry = Math.floor(Date.now() / 1000) + 60
 
 
 const swapParams = {
@@ -82,8 +82,8 @@ const _createHTLC = async () => {
       prepare(acct: AuthAccount) {
         let manager = acct.borrow<&HTLCs.HTLCManager>(from: HTLCs.HtlcManagerStoragePath)!
 
-        let buyerCapability = getAccount(buyerAddress).getCapability<&{FungibleToken.Receiver}>(/public/flowTokenVault)
-        let sellerCapability = getAccount(sellerAddress).getCapability<&{FungibleToken.Receiver}>(/public/flowTokenVault)
+        let buyerCapability = getAccount(buyerAddress).getCapability<&{FungibleToken.Receiver}>(/public/flowTokenReceiver)
+        let sellerCapability = getAccount(sellerAddress).getCapability<&{FungibleToken.Receiver}>(/public/flowTokenReceiver)
 
         let flowVault = acct.borrow<&FlowToken.Vault>(from: /storage/flowTokenVault)!
 
@@ -145,7 +145,7 @@ const _claimHTLC = async () => {
     fcl.args([
       fcl.arg(SELLER_ADDRESS, t.Address),
       fcl.arg(BUYER_ADDRESS, t.Address),
-      fcl.arg('1633092144.0', t.UFix64),
+      fcl.arg('1633095652.0', t.UFix64),
       fcl.arg(secretHash.toString(), t.String),
       fcl.arg(secret.toString(), t.String),
     ]),
@@ -186,7 +186,7 @@ const _refundHTLC = async () => {
     fcl.args([
       fcl.arg(SELLER_ADDRESS, t.Address),
       fcl.arg(BUYER_ADDRESS, t.Address),
-      fcl.arg('1633077290.00000000', t.UFix64),
+      fcl.arg('1633104669.00000000', t.UFix64),
       fcl.arg(secretHash.toString(), t.String),
     ]),
     fcl.proposer(authorizationFunction),

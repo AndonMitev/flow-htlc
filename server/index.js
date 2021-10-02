@@ -3,4 +3,5 @@ const { _createManager, _createHTLC, _claimHTLC, _refundHTLC } = require('./swap
 
 // _createManager()
 // _createHTLC()
-_claimHTLC()
+// _claimHTLC()
+_refundHTLC()
